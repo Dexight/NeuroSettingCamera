@@ -65,6 +65,7 @@ namespace AForge.WindowsForms
 
     internal class MagicEye
     {
+        public Bitmap originImage;
         /// <summary>
         /// Обработанное изображение
         /// </summary>
@@ -110,14 +111,20 @@ namespace AForge.WindowsForms
             Graphics g = Graphics.FromImage(original);
             
             g.DrawImage(bitmap, new Rectangle(0, 0, original.Width, original.Height), cropRect, GraphicsUnit.Pixel);
+
             Pen p = new Pen(Color.Red);
             p.Width = 1;
 
             //  Теперь всю эту муть пилим в обработанное изображение
-            AForge.Imaging.Filters.Grayscale grayFilter = new AForge.Imaging.Filters.Grayscale(0.2125, 0.7154, 0.0721);
-            var uProcessed = grayFilter.Apply(AForge.Imaging.UnmanagedImage.FromManagedImage(original));
-
             
+            var orig = AForge.Imaging.UnmanagedImage.FromManagedImage(original);
+
+            originImage = orig.ToManagedImage();
+
+            AForge.Imaging.Filters.Grayscale grayFilter = new AForge.Imaging.Filters.Grayscale(0.2125, 0.7154, 0.0721);
+            var uProcessed = grayFilter.Apply(orig);
+
+
             int blockWidth = original.Width / settings.blocksCount;
             int blockHeight = original.Height / settings.blocksCount;
             for (int r = 0; r < settings.blocksCount; ++r)

@@ -211,6 +211,8 @@ namespace AForge.WindowsForms
 
         // Путь к папке DATASETS
         private string path = Path.Combine(Application.StartupPath, @"..\..\DATASET");
+        // Путь к папке ORIGIN
+        private string pathOrigin = Path.Combine(Application.StartupPath, @"..\..\ORIGIN");
 
         private void saveButton_Click(object sender, EventArgs e)
         {
@@ -221,6 +223,7 @@ namespace AForge.WindowsForms
             }
 
             string targetFolderPath = Path.Combine(path, comboBox1.SelectedItem.ToString());
+            string targetOriginPath = Path.Combine(pathOrigin, comboBox1.SelectedItem.ToString());
 
             if (!Directory.Exists(targetFolderPath))
             {
@@ -229,14 +232,17 @@ namespace AForge.WindowsForms
             }
 
             Bitmap new_sample = controller.processor.processed;
+            Bitmap origin = controller.processor.originImage;
 
             string fileName = $"image_{DateTime.Now:yyyyMMdd_HHmmss}.png";
             string filePath = Path.Combine(targetFolderPath, fileName);
+            string originPath = Path.Combine(targetOriginPath, fileName);
 
             try
             {
                 // Сохраняем изображение
                 new_sample.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
+                origin.Save(originPath, System.Drawing.Imaging.ImageFormat.Png);
                 MessageBox.Show($"Изображение успешно сохранено в папке: {targetFolderPath}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -246,6 +252,7 @@ namespace AForge.WindowsForms
             finally
             {
                 new_sample.Dispose();
+                origin.Dispose();
             }
         }
 
