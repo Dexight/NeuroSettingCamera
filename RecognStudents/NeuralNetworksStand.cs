@@ -16,6 +16,8 @@ namespace NeuralNetwork1
         /// </summary>
         GenerateImage generator = new GenerateImage();
 
+        MainForm CameraDialog;
+
         /// <summary>
         /// Текущая выбранная через селектор нейросеть
         /// </summary>
@@ -40,6 +42,7 @@ namespace NeuralNetwork1
         /// <param name="networksFabric">Словарь функций, создающих сети с заданной структурой</param>
         public NeuralNetworksStand(Dictionary<string, Func<int[], BaseNetwork>> networksFabric)
         {
+            CameraDialog = new MainForm(this);
             InitializeComponent();
             this.networksFabric = networksFabric;
             netTypeBox.Items.AddRange(this.networksFabric.Keys.Select(s => (object) s).ToArray());
@@ -193,12 +196,13 @@ namespace NeuralNetwork1
 
         private void btnTrainOne_Click(object sender, EventArgs e)
         {
-            if (Net == null) return;
-            Sample fig = generator.GenerateFigure();
-            pictureBox1.Image = generator.GenBitmap();
-            pictureBox1.Invalidate();
-            Net.Train(fig, 0.00005, parallelCheckBox.Checked);
-            set_result(fig);
+            CameraDialog.ShowDialog();
+            //if (Net == null) return;
+            //Sample fig = generator.GenerateFigure();
+            //pictureBox1.Image = generator.GenBitmap();
+            //pictureBox1.Invalidate();
+            //Net.Train(fig, 0.00005, parallelCheckBox.Checked);
+            //set_result(fig);
         }
 
         private BaseNetwork CreateNetwork(string networkName)

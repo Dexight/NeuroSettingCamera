@@ -13,6 +13,8 @@ using AForge.Video.DirectShow;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.IO;
+using System.Security.Cryptography;
+using NeuralNetwork1;
 
 namespace AForge.WindowsForms
 {
@@ -80,8 +82,11 @@ namespace AForge.WindowsForms
             return;
         }
 
-        public MainForm()
+        NeuralNetworksStand MotherForm;
+
+        public MainForm(NeuralNetworksStand mother)
         {
+            MotherForm = mother;
             InitializeComponent();
             // Список камер получаем
             videoDevicesList = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -259,6 +264,13 @@ namespace AForge.WindowsForms
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Bitmap new_sample = controller.processor.processed;
+            label3.Text = DatasetManager.Names[MotherForm.Net.Predict(DatasetManager.CreateOneSample(new_sample))];
+            new_sample.Dispose();
         }
     }
 }

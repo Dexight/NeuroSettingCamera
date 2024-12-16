@@ -27,7 +27,7 @@ namespace AForge.WindowsForms
         static string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\DATASET";
 
         //класс фигуры по ключу
-        static Dictionary<string, FigureType> Classes = new Dictionary<string, FigureType>() {
+        private static Dictionary<string, FigureType> Classes = new Dictionary<string, FigureType>() {
             {"0", FigureType.Zero },
             {"1", FigureType.One},
             {"2", FigureType.Two},
@@ -37,8 +37,33 @@ namespace AForge.WindowsForms
             {"6", FigureType.Six},
             {"7", FigureType.Seven },
             {"8", FigureType.Eight },
-            {"9", FigureType.Nine }
+            {"9", FigureType.Nine },
+            {"-", FigureType.Undef }
         };
+        
+        //класс фигуры по ключу
+        public static Dictionary<FigureType, string> Names = new Dictionary<FigureType, string>() {
+            {FigureType.Zero  , "0"},
+            {FigureType.One   , "1"},
+            {FigureType.Two   , "2"},
+            {FigureType.Three , "3"},
+            {FigureType.Four  , "4"},
+            {FigureType.Five  , "5"},
+            {FigureType.Six   , "6"},
+            {FigureType.Seven , "7"},
+            {FigureType.Eight , "8"},
+            {FigureType.Nine  , "9"},
+            {FigureType.Undef , "-"}
+        };
+
+        public static Sample CreateOneSample(Bitmap bmp, FigureType figureType = FigureType.Undef)
+        {
+            imgBits.Clear(); // очищаем массив
+            FillImgBits(bmp);
+            var transitions = CountBlackToWhiteTransitions(); // Считаем количество переходов
+            return new Sample(transitions, 10, figureType);
+        }
+
         //Создание датасета
         public static void CreateDataset()
         {
@@ -47,17 +72,13 @@ namespace AForge.WindowsForms
             foreach (var dir in dirs)
             {
                 var key = dir.Substring(dir.Length - 1); // ключ 
-                var FigureType = Classes[key]; // класс по ключу
+                var figureType = Classes[key]; // класс по ключу
                 string[] fnames = Directory.GetFiles(dir);
                 foreach (string fname in fnames)
                 {
-                    imgBits.Clear(); // очищаем массив
-
                     using (Bitmap bmp = new Bitmap(fname))
                     {
-                        FillImgBits(bmp);
-                        var transitions = CountBlackToWhiteTransitions(); // Считаем количество переходов
-                        samples.AddSample(new Sample(transitions, 10, FigureType)); // добавляем sample
+                        samples.AddSample(CreateOneSample(bmp, figureType)); // добавляем sample
                     }
                 }
             }

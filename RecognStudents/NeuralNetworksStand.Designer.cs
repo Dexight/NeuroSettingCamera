@@ -146,19 +146,19 @@
             // 
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.netTypeBox);
-            this.groupBox1.Controls.Add(this.parallelCheckBox);
+            //this.groupBox1.Controls.Add(this.parallelCheckBox);
             this.groupBox1.Controls.Add(this.netStructureBox);
             this.groupBox1.Controls.Add(this.recreateNetButton);
-            this.groupBox1.Controls.Add(this.classCounter);
-            this.groupBox1.Controls.Add(this.label10);
+            //this.groupBox1.Controls.Add(this.classCounter);
+            //this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.testNetButton);
             this.groupBox1.Controls.Add(this.netTrainButton);
             this.groupBox1.Controls.Add(this.AccuracyCounter);
             this.groupBox1.Controls.Add(label6);
             this.groupBox1.Controls.Add(this.EpochesCounter);
             this.groupBox1.Controls.Add(label5);
-            this.groupBox1.Controls.Add(this.TrainingSizeCounter);
-            this.groupBox1.Controls.Add(label4);
+            //this.groupBox1.Controls.Add(this.TrainingSizeCounter);
+            //this.groupBox1.Controls.Add(label4);
             this.groupBox1.Controls.Add(label2);
             this.groupBox1.Location = new System.Drawing.Point(771, 62);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -209,7 +209,7 @@
             this.netStructureBox.Name = "netStructureBox";
             this.netStructureBox.Size = new System.Drawing.Size(178, 26);
             this.netStructureBox.TabIndex = 18;
-            this.netStructureBox.Text = "400;500;20;2";
+            this.netStructureBox.Text = "225;500;20;10";
             // 
             // recreateNetButton
             // 
@@ -364,7 +364,7 @@
             this.trainOneButton.Name = "trainOneButton";
             this.trainOneButton.Size = new System.Drawing.Size(189, 46);
             this.trainOneButton.TabIndex = 8;
-            this.trainOneButton.Text = "Обучить образцу";
+            this.trainOneButton.Text = "Попробовать вебку";
             this.trainOneButton.UseVisualStyleBackColor = true;
             this.trainOneButton.Click += new System.EventHandler(this.btnTrainOne_Click);
             // 
