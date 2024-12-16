@@ -2,11 +2,13 @@
 using Accord.Neuro;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Resources;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace NeuralNetwork1
 {
@@ -114,13 +116,21 @@ namespace NeuralNetwork1
         private void ForwardPropagation(double[] input)
         {
             // Filling network input layer
-            for (int neuron = 0; neuron < layers[0].Length; ++neuron)
+            Parallel.For(0, layers[0].Length, neuron =>
+            {
                 layers[0][neuron].output = input[neuron];
+            });
+            //for (int neuron = 0; neuron < layers[0].Length; ++neuron)
+            //layers[0][neuron].output = input[neuron];
 
             // Filling other layers from left to right
             for (int layer = 1; layer < layers.Count; ++layer)
-                for (int neuron = 0; neuron < layers[layer].Length; ++neuron)
+                Parallel.For(0, layers[layer].Length, neuron =>
+                {
                     layers[layer][neuron].output = layers[layer].activationFunction(NeuronsAndWeightsDotProduct(layer, neuron));
+                });
+                //for (int neuron = 0; neuron < layers[layer].Length; ++neuron)
+                    //layers[layer][neuron].output = layers[layer].activationFunction(NeuronsAndWeightsDotProduct(layer, neuron));
         }
 
         private void UpdateWeightsByErros(int layer, int neuron_ind)
@@ -143,13 +153,21 @@ namespace NeuralNetwork1
         private void BackwardPropagation(double[] expected_output)
         {
             // Filling network output layer error
-            for (int i = 0; i < layers[layers.Count - 1].Length; ++i)
+            Parallel.For(0, layers[layers.Count - 1].Length, i =>
+            {
                 layers[layers.Count - 1][i].error = lossFunctionDerivative(layers[layers.Count - 1][i].output, expected_output[i]);
+            });
+            //for (int i = 0; i < layers[layers.Count - 1].Length; ++i)
+            //layers[layers.Count - 1][i].error = lossFunctionDerivative(layers[layers.Count - 1][i].output, expected_output[i]);
 
             // Change other layers weights from right to left
             for (int layer = layers.Count - 1; layer > 0; --layer)
-                for (int neuron = 0; neuron < layers[layer].Length; ++neuron)
+                Parallel.For(0, layers[layer].Length, neuron =>
+                {
                     UpdateWeightsByErros(layer, neuron);
+                });
+                //for (int neuron = 0; neuron < layers[layer].Length; ++neuron)
+                    //UpdateWeightsByErros(layer, neuron);
         }
 
         public override int Train(Sample sample, double acceptableError, bool parallel)
