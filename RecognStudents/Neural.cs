@@ -150,6 +150,18 @@ namespace NeuralNetwork1
             samples.Add(image);
         }
 
+        public void Shuffle()
+        {
+            Random random = new Random(); 
+            int n = samples.Count;
+            // Алгоритм Фишера-Йетса
+            for (int i = n - 1; i > 0; i--)
+            {
+                int j = random.Next(i + 1); // Случайный индекс в диапазоне [0, i]
+                (samples[i], samples[j]) = (samples[j], samples[i]); // Обмен элементов
+            }
+        }
+
         public int Count => samples.Count;
 
         public IEnumerator GetEnumerator()

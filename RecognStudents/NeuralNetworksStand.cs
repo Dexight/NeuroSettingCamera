@@ -102,8 +102,10 @@ namespace NeuralNetwork1
             //samples.AddSample(generator.GenerateFigure());
 
             //Обучающая выборка
-            SamplesSet samples = DatasetManager.TrainSet;
+            DatasetManager.CreateDataset();
 
+            SamplesSet samples = DatasetManager.TrainSet;
+            //Console.WriteLine(samples.samples[0].input.Count());
             try
             {
                 //  Обучение запускаем асинхронно, чтобы не блокировать форму
@@ -159,14 +161,14 @@ namespace NeuralNetwork1
         {
             //  Проверяем корректность задания структуры сети
             int[] structure = CurrentNetworkStructure();
-            if (structure.Length < 2 || structure[0] != 400 ||
-                structure[structure.Length - 1] != generator.FigureCount)
-            {
-                MessageBox.Show(
-                    $"В сети должно быть более двух слоёв, первый слой должен содержать 400 нейронов, последний - ${generator.FigureCount}",
-                    "Ошибка", MessageBoxButtons.OK);
-                return;
-            }
+            //if (structure.Length < 2 || structure[0] != 400 ||
+            //    structure[structure.Length - 1] != generator.FigureCount)
+            //{
+            //    MessageBox.Show(
+            //        $"В сети должно быть более двух слоёв, первый слой должен содержать 400 нейронов, последний - ${generator.FigureCount}",
+            //        "Ошибка", MessageBoxButtons.OK);
+            //    return;
+            //}
 
             // Чистим старые подписки сетей
             foreach (var network in networksCache.Values)
