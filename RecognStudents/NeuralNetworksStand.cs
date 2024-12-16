@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AForge.WindowsForms;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -95,10 +96,14 @@ namespace NeuralNetwork1
             trainOneButton.Enabled = false;
 
             //  Создаём новую обучающую выборку
-            SamplesSet samples = new SamplesSet();
+            //SamplesSet samples = new SamplesSet();
 
-            for (int i = 0; i < training_size; i++)
-                samples.AddSample(generator.GenerateFigure());
+            //for (int i = 0; i < training_size; i++)
+            //samples.AddSample(generator.GenerateFigure());
+
+            //Обучающая выборка
+            SamplesSet samples = DatasetManager.TrainSet;
+
             try
             {
                 //  Обучение запускаем асинхронно, чтобы не блокировать форму
@@ -130,15 +135,17 @@ namespace NeuralNetwork1
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
+        // Создание тестовой выборки
+        // TODO: Добавить тестирование через менеджер
         private void button2_Click(object sender, EventArgs e)
         {
             Enabled = false;
             //  Тут просто тестирование новой выборки
             //  Создаём новую обучающую выборку
-            SamplesSet samples = new SamplesSet();
-
-            for (int i = 0; i < (int) TrainingSizeCounter.Value; i++)
-                samples.AddSample(generator.GenerateFigure());
+            SamplesSet samples = DatasetManager.TestSet;
+            //SamplesSet =
+            //for (int i = 0; i < (int) TrainingSizeCounter.Value; i++)
+                //samples.AddSample(generator.GenerateFigure());
 
             double accuracy = samples.TestNeuralNetwork(Net);
 
