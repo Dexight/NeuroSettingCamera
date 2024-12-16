@@ -105,7 +105,7 @@ namespace NeuralNetwork1
             DatasetManager.CreateDataset();
 
             SamplesSet samples = DatasetManager.TrainSet;
-            Console.WriteLine(samples.samples[0].input.Count());
+            //Console.WriteLine(samples.samples[0].input.Count());
             try
             {
                 //  Обучение запускаем асинхронно, чтобы не блокировать форму

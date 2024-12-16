@@ -61,6 +61,7 @@ namespace AForge.WindowsForms
                     }
                 }
             }
+            samples.Shuffle(); // перемешиваем выборку
             TrainSet = samples;
         }
         //Заполняет массив с информацие про пиксели
