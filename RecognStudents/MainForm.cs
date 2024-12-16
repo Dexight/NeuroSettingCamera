@@ -234,14 +234,14 @@ namespace AForge.WindowsForms
             Bitmap new_sample = controller.processor.processed;
             Bitmap origin = controller.processor.originImage;
 
-            string fileName = $"image_{DateTime.Now:yyyyMMdd_HHmmss}.png";
-            string filePath = Path.Combine(targetFolderPath, fileName);
-            string originPath = Path.Combine(targetOriginPath, fileName);
+            string fileName = $"image_{DateTime.Now:yyyyMMdd_HHmmss}";
+            string filePath = Path.Combine(targetFolderPath, fileName+".bmp");
+            string originPath = Path.Combine(targetOriginPath, fileName+".png");
 
             try
             {
                 // Сохраняем изображение
-                new_sample.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
+                new_sample.Save(filePath, System.Drawing.Imaging.ImageFormat.Bmp);
                 origin.Save(originPath, System.Drawing.Imaging.ImageFormat.Png);
                 MessageBox.Show($"Изображение успешно сохранено в папке: {targetFolderPath}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
