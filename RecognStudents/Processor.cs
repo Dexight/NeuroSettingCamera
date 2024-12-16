@@ -224,7 +224,14 @@ namespace AForge.WindowsForms
 
             // Обрезаем края, оставляя только центральные блобчики
             AForge.Imaging.Filters.Crop cropFilter = new AForge.Imaging.Filters.Crop(new Rectangle(lx, ly, rx - lx, ry - ly));
-            unmanaged = cropFilter.Apply(unmanaged);
+            try
+            {
+                unmanaged = cropFilter.Apply(unmanaged);
+            }
+            catch (Exception)
+            {
+                // Ошибка игнорируется
+            }
 
             //  Масштабируем до нужного размера
             AForge.Imaging.Filters.ResizeBilinear scaleFilter = new AForge.Imaging.Filters.ResizeBilinear(_sampleSizeX, _sampleSizeY);
